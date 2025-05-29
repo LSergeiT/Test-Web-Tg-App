@@ -27,13 +27,13 @@
     </style>
 </head>
 <body>
-    <h1 id="welcome">Привет!</h1>
+    <h1 id="welcome">Hi!</h1>
     <div class="checkbox-group">
         <label><input type="checkbox" id="one"> One</label>
         <label><input type="checkbox" id="two"> Two</label>
         <label><input type="checkbox" id="three"> Three</label>
     </div>
-    <button id="submit">Отправить</button>
+    <button id="submit">Submit</button>
 
     <script>
         // Убедитесь, что приложение готово
@@ -59,10 +59,7 @@
             else selectedOptions.push("three - невыбрано");
 
             const completionTime = new Date().toLocaleString();
-            const message = `Форма заполнена: ${name}, ${selectedOptions.join(', ')}, Время завершения теста: ${completionTime}`;
-
-            // Отправляем сообщение в бот
-            Telegram.WebApp.sendData(message);
+            alert(`ФИО: ${name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`);
         };
     </script>
 </body>
