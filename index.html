@@ -18,10 +18,22 @@
         h1 {
             color: #333;
         }
+        .checkbox-group {
+            margin: 20px 0;
+        }
+        .checkbox-group label {
+            margin-right: 10px;
+        }
     </style>
 </head>
 <body>
     <h1 id="welcome">Hi!</h1>
+    <div class="checkbox-group">
+        <label><input type="checkbox" id="one"> One</label>
+        <label><input type="checkbox" id="two"> Two</label>
+        <label><input type="checkbox" id="three"> Three</label>
+    </div>
+    <button id="submit">Submit</button>
 
     <script>
         // Убедитесь, что приложение готово
@@ -35,6 +47,20 @@
             const welcomeMessage = `Привет, ${user.first_name}!`;
             document.getElementById('welcome').innerText = welcomeMessage;
         }
+
+        document.getElementById('submit').onclick = function() {
+            const name = prompt("Введите ваше имя:");
+            const selectedOptions = [];
+            if (document.getElementById('one').checked) selectedOptions.push("one - выбрано");
+            else selectedOptions.push("one - невыбрано");
+            if (document.getElementById('two').checked) selectedOptions.push("two - выбрано");
+            else selectedOptions.push("two - невыбрано");
+            if (document.getElementById('three').checked) selectedOptions.push("three - выбрано");
+            else selectedOptions.push("three - невыбрано");
+
+            const completionTime = new Date().toLocaleString();
+            alert(`ФИО: ${name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`);
+        };
     </script>
 </body>
 </html>
