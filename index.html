@@ -1,229 +1,66 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>20 Чекбоксов</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 400px;
-      margin: 40px auto;
-      background: #f5f7fa;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 24px;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-    label {
-      cursor: pointer;
-      color: #444;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      user-select: none;
-    }
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: #007bff;
-      border-radius: 4px;
-    }
-    button {
-      background-color: #007bff;
-      border: none;
-      color: white;
-      font-size: 18px;
-      padding: 12px 0;
-      width: 100%;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-weight: 600;
-      box-shadow: 0 4px 8px rgba(0,123,255,0.3);
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    button:active {
-      background-color: #004494;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+        .checkbox-group {
+            margin: 20px 0;
+        }
+        .checkbox-group label {
+            margin-right: 10px;
+        }
+    </style>
 </head>
 <body>
-  <h1>Выберите варианты</h1>
-  <form id="checkbox-form">
+    <h1 id="welcome">Hi!</h1>
     <div class="checkbox-group">
-      <label><input type="checkbox" name="option" value="1" /> Вариант 1</label>
-      <label><input type="checkbox" name="option" value="2" /> Вариант 2</label>
-      <label><input type="checkbox" name="option" value="3" /> Вариант 3</label>
-      <label><input type="checkbox" name="option" value="4" /> Вариант 4</label>
-      <label><input type="checkbox" name="option" value="5" /> Вариант 5</label>
-      <label><input type="checkbox" name="option" value="6" /> Вариант 6</label>
-      <label><input type="checkbox" name="option" value="7" /> Вариант 7</label>
-      <label><input type="checkbox" name="option" value="8" /> Вариант 8</label>
-      <label><input type="checkbox" name="option" value="9" /> Вариант 9</label>
-      <label><input type="checkbox" name="option" value="10" /> Вариант 10</label>
-      <label><input type="checkbox" name="option" value="11" /> Вариант 11</label>
-      <label><input type="checkbox" name="option" value="12" /> Вариант 12</label>
-      <label><input type="checkbox" name="option" value="13" /> Вариант 13</label>
-      <label><input type="checkbox" name="option" value="14" /> Вариант 14</label>
-      <label><input type="checkbox" name="option" value="15" /> Вариант 15</label>
-      <label><input type="checkbox" name="option" value="16" /> Вариант 16</label>
-      <label><input type="checkbox" name="option" value="17" /> Вариант 17</label>
-      <label><input type="checkbox" name="option" value="18" /> Вариант 18</label>
-      <label><input type="checkbox" name="option" value="19" /> Вариант 19</label>
-      <label><input type="checkbox" name="option" value="20" /> Вариант 20</label>
+        <label><input type="checkbox" id="one"> One</label>
+        <label><input type="checkbox" id="two"> Two</label>
+        <label><input type="checkbox" id="three"> Three</label>
     </div>
-    <button type="submit">Завершить</button>
-  </form>
-</body>
-</html>
+    <button id="submit">Submit</button>
 
-<!DOCTYPE html>
-<html lang="ru">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>20 Чекбоксов</title>
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      max-width: 400px;
-      margin: 40px auto;
-      background: #f5f7fa;
-      padding: 20px;
-      border-radius: 8px;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    }
-    h1 {
-      text-align: center;
-      color: #333;
-      margin-bottom: 24px;
-    }
-    .checkbox-group {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-bottom: 30px;
-    }
-    label {
-      cursor: pointer;
-      color: #444;
-      font-size: 16px;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      user-select: none;
-    }
-    input[type="checkbox"] {
-      width: 20px;
-      height: 20px;
-      cursor: pointer;
-      accent-color: #007bff;
-      border-radius: 4px;
-    }
-    button {
-      background-color: #007bff;
-      border: none;
-      color: white;
-      font-size: 18px;
-      padding: 12px 0;
-      width: 100%;
-      border-radius: 6px;
-      cursor: pointer;
-      transition: background-color 0.3s ease;
-      font-weight: 600;
-      box-shadow: 0 4px 8px rgba(0,123,255,0.3);
-    }
-    button:hover {
-      background-color: #0056b3;
-    }
-    button:active {
-      background-color: #004494;
-    }
-    #result {
-      margin-top: 20px;
-      font-size: 16px;
-      color: #333;
-      text-align: center;
-      white-space: pre-wrap;
-    }
-  </style>
-</head>
-<body>
-  <h1>Выберите варианты</h1>
-  <form id="checkbox-form">
-    <div class="checkbox-group">
-      <label><input type="checkbox" name="option" value="1" /> Вариант 1</label>
-      <label><input type="checkbox" name="option" value="2" /> Вариант 2</label>
-      <label><input type="checkbox" name="option" value="3" /> Вариант 3</label>
-      <label><input type="checkbox" name="option" value="4" /> Вариант 4</label>
-      <label><input type="checkbox" name="option" value="5" /> Вариант 5</label>
-      <label><input type="checkbox" name="option" value="6" /> Вариант 6</label>
-      <label><input type="checkbox" name="option" value="7" /> Вариант 7</label>
-      <label><input type="checkbox" name="option" value="8" /> Вариант 8</label>
-      <label><input type="checkbox" name="option" value="9" /> Вариант 9</label>
-      <label><input type="checkbox" name="option" value="10" /> Вариант 10</label>
-      <label><input type="checkbox" name="option" value="11" /> Вариант 11</label>
-      <label><input type="checkbox" name="option" value="12" /> Вариант 12</label>
-      <label><input type="checkbox" name="option" value="13" /> Вариант 13</label>
-      <label><input type="checkbox" name="option" value="14" /> Вариант 14</label>
-      <label><input type="checkbox" name="option" value="15" /> Вариант 15</label>
-      <label><input type="checkbox" name="option" value="16" /> Вариант 16</label>
-      <label><input type="checkbox" name="option" value="17" /> Вариант 17</label>
-      <label><input type="checkbox" name="option" value="18" /> Вариант 18</label>
-      <label><input type="checkbox" name="option" value="19" /> Вариант 19</label>
-      <label><input type="checkbox" name="option" value="20" /> Вариант 20</label>
-    </div>
-    <button type="submit">Завершить</button>
-  </form>
+    <script>
+        // Убедитесь, что приложение готово
+        Telegram.WebApp.ready();
 
-  <div id="result"></div>
+        // Получаем данные о пользователе
+        const user = Telegram.WebApp.initDataUnsafe.user;
 
-  <script>
-    document.getElementById('checkbox-form').addEventListener('submit', function(event) {
-      event.preventDefault();
+        // Персонализируем приветствие
+        if (user) {
+            const welcomeMessage = `Привет, ${user.first_name}!`;
+            document.getElementById('welcome').innerText = welcomeMessage;
+        }
 
-      const checkboxes = document.querySelectorAll('input[name="option"]:checked');
-      if (checkboxes.length === 0) {
-        document.getElementById('result').textContent = 'Ничего не выбрано.';
-        return;
-      }
+        document.getElementById('submit').onclick = function() {
+            const name = prompt("Введите ваше имя:");
+            const selectedOptions = [];
+            if (document.getElementById('one').checked) selectedOptions.push("one - выбрано");
+            else selectedOptions.push("one - невыбрано");
+            if (document.getElementById('two').checked) selectedOptions.push("two - выбрано");
+            else selectedOptions.push("two - невыбрано");
+            if (document.getElementById('three').checked) selectedOptions.push("three - выбрано");
+            else selectedOptions.push("three - невыбрано");
 
-      const selectedTexts = Array.from(checkboxes).map(cb => cb.nextSibling.textContent.trim());
-      const content = selectedTexts.join('\n');
-
-      // Создаём Blob из текста
-      const blob = new Blob([content], {type: 'text/plain;charset=utf-8'});
-
-Витецкий Смирноцецкий, [29.05.2025 22:52]
-// Создаём ссылку для скачивания
-      const url = URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'выбранные_варианты.txt';
-
-      // Кликаем по ссылке программно — начнётся скачивание
-      a.click();
-
-      // Очистка
-      URL.revokeObjectURL(url);
-
-      document.getElementById('result').textContent = 'Файл скачивается...';
-    });
-  </script>
+            const completionTime = new Date().toLocaleString();
+            alert(`ФИО: ${name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`);
+        };
+    </script>
 </body>
 </html>
