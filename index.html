@@ -49,7 +49,6 @@
         }
 
         document.getElementById('submit').onclick = function() {
-            const name = prompt("Введите ваше имя:");
             const selectedOptions = [];
             if (document.getElementById('one').checked) selectedOptions.push("one - выбрано");
             else selectedOptions.push("one - невыбрано");
@@ -59,8 +58,18 @@
             else selectedOptions.push("three - невыбрано");
 
             const completionTime = new Date().toLocaleString();
-            alert(`ФИО: ${name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`);
-            // Здесь вы можете отправить данные обратно в бота
+            const userData = `ФИО: ${user.first_name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`;
+            // Отправка данных администратору через бота
+            fetch('https://your-bot-url.com/send-data', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({ data: userData })
+            });
+
+            // Удаление всех сообщений
+            Telegram.WebApp.close();
         };
     </script>
 </body>
