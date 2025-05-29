@@ -29,26 +29,9 @@
 <body>
     <h1 id="welcome">Hi!</h1>
     <div class="checkbox-group">
-        <label><input type="checkbox" id="treadmill"> Беговая дорожка</label>
-        <label><input type="checkbox" id="exerciseBike"> Велотренажер</label>
-        <label><input type="checkbox" id="rowingMachine"> Гребной тренажер</label>
-        <label><input type="checkbox" id="ellipticalTrainer"> Эллиптический тренажер</label>
-        <label><input type="checkbox" id="stepper"> Степпер</label>
-        <label><input type="checkbox" id="benchPress"> Жим лежа</label>
-        <label><input type="checkbox" id="pullUpBar"> Турник</label>
-        <label><input type="checkbox" id="dumbbells"> Гантели</label>
-        <label><input type="checkbox" id="barbell"> Штанга</label>
-        <label><input type="checkbox" id="kettlebell"> Гиря</label>
-        <label><input type="checkbox" id="medicineBall"> Медицинный мяч</label>
-        <label><input type="checkbox" id="resistanceBand"> Ресиновый бандаж</label>
-        <label><input type="checkbox" id="jumpRope"> Скакалка</label>
-        <label><input type="checkbox" id="balanceBoard"> Балансная доска</label>
-        <label><input type="checkbox" id="exerciseBall"> Фитбол</label>
-        <label><input type="checkbox" id="punchingBag"> Боксерская груша</label>
-        <label><input type="checkbox" id="parallelBars"> Параллельные брусья</label>
-        <label><input type="checkbox" id="horizontalBar"> Горизонтальная планка</label>
-        <label><input type="checkbox" id="romanChair"> Римский стул</label>
-        <label><input type="checkbox" id="legPress"> Пресс для ног</label>
+        <label><input type="checkbox" id="one"> One</label>
+        <label><input type="checkbox" id="two"> Two</label>
+        <label><input type="checkbox" id="three"> Three</label>
     </div>
     <button id="submit">Submit</button>
 
@@ -66,53 +49,17 @@
         }
 
         document.getElementById('submit').onclick = function() {
+            const name = prompt("Введите ваше имя:");
             const selectedOptions = [];
-            if (document.getElementById('treadmill').checked) selectedOptions.push("Беговая дорожка - выбрано");
-            else selectedOptions.push("Беговая дорожка - невыбрано");
-            if (document.getElementById('exerciseBike').checked) selectedOptions.push("Велотренажер - выбрано");
-            else selectedOptions.push("Велотренажер - невыбрано");
-            if (document.getElementById('rowingMachine').checked) selectedOptions.push("Гребной тренажер - выбрано");
-            else selectedOptions.push("Гребной тренажер - невыбрано");
-            if (document.getElementById('ellipticalTrainer').checked) selectedOptions.push("Эллиптический тренажер - выбрано");
-            else selectedOptions.push("Эллиптический тренажер - невыбрано");
-            if (document.getElementById('stepper').checked) selectedOptions.push("Степпер - выбрано");
-            else selectedOptions.push("Степпер - невыбрано");
-            if (document.getElementById('benchPress').checked) selectedOptions.push("Жим лежа - выбрано");
-            else selectedOptions.push("Жим лежа - невыбрано");
-            if (document.getElementById('pullUpBar').checked) selectedOptions.push("Турник - выбрано");
-            else selectedOptions.push("Турник - невыбрано");
-            if (document.getElementById('dumbbells').checked) selectedOptions.push("Гантели - выбрано");
-            else selectedOptions.push("Гантели - невыбрано");
-            if (document.getElementById('barbell').checked) selectedOptions.push("Штанга - выбрано");
-            else selectedOptions.push("Штанга - невыбрано");
-            if (document.getElementById('kettlebell').checked) selectedOptions.push("Гиря - выбрано");
-            else selectedOptions.push("Гиря - невыбрано");
-            if (document.getElementById('medicineBall').checked) selectedOptions.push("Медицинский мяч - выбрано");
-            else selectedOptions.push("Медицинский мяч - невыбрано");
-            if (document.getElementById('resistanceBand').checked) selectedOptions.push("Ресиновый бандаж - выбрано");
-            else selectedOptions.push("Ресиновый бандаж - невыбрано");
-            if (document.getElementById('jumpRope').checked) selectedOptions.push("Скакалка - выбрано");
-            else selectedOptions.push("Скакалка - невыбрано");
-            if (document.getElementById('balanceBoard').checked) selectedOptions.push("Балансная доска - выбрано");
-            else selectedOptions.push("Балансная доска - невыбрано");
-            if (document.getElementById('exerciseBall').checked) selectedOptions.push("Фитбол - выбрано");
-            else selectedOptions.push("Фитбол - невыбрано");
-            if (document.getElementById('punchingBag').checked) selectedOptions.push("Боксерская груша - выбрано");
-            else selectedOptions.push("Боксерская груша - невыбрано");
-            if (document.getElementById('parallelBars').checked) selectedOptions.push("Параллельные брусья - выбрано");
-            else selectedOptions.push("Параллельные брусья - невыбрано");
-            if (document.getElementById('horizontalBar').checked) selectedOptions.push("Горизонтальная планка - выбрано");
-            else selectedOptions.push("Горизонтальная планка - невыбрано");
-            if (document.getElementById('romanChair').checked) selectedOptions.push("Римский стул - выбрано");
-            else selectedOptions.push("Римский стул - невыбрано");
-            if (document.getElementById('legPress').checked) selectedOptions.push("Пресс для ног - выбрано");
-            else selectedOptions.push("Пресс для ног - невыбрано");
+            if (document.getElementById('one').checked) selectedOptions.push("one - выбрано");
+            else selectedOptions.push("one - невыбрано");
+            if (document.getElementById('two').checked) selectedOptions.push("two - выбрано");
+            else selectedOptions.push("two - невыбрано");
+            if (document.getElementById('three').checked) selectedOptions.push("three - выбрано");
+            else selectedOptions.push("three - невыбрано");
 
             const completionTime = new Date().toLocaleString();
-            Telegram.WebApp.sendData({
-                "selectedOptions": selectedOptions.join('\n'),
-                "completionTime": completionTime
-            });
+            alert(`ФИО: ${name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`);
         };
     </script>
 </body>
