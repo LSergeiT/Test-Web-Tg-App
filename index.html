@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Telegram Web App</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        h1 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="welcome">Hi!</h1>
+
+    <script>
+        // Убедитесь, что приложение готово
+        Telegram.WebApp.ready();
+
+        // Получаем данные о пользователе
+        const user = Telegram.WebApp.initDataUnsafe.user;
+
+        // Персонализируем приветствие
+        if (user) {
+            const welcomeMessage = `Привет, ${user.first_name}!`;
+            document.getElementById('welcome').innerText = welcomeMessage;
+        }
+    </script>
+</body>
+</html>
