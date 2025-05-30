@@ -8,9 +8,21 @@
         body {
             font-family: Arial, sans-serif;
             margin: 20px;
+            background-color: #333; /* Темный фон */
+            color: #fff; /* Светлый текст */
         }
         .task {
             margin: 10px 0;
+        }
+        button {
+            background-color: #555; /* Темная кнопка */
+            color: #fff; /* Светлый текст на кнопке */
+            border: none;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #777; /* Светлее при наведении */
         }
     </style>
 </head>
@@ -52,7 +64,29 @@
             const currentTime = new Date().toLocaleString();
             
             const message = `ФИО: ${fio}\nВремя: ${currentTime}\nВыбрано: ${selectedTasks.join(', ')}\nНе выбрано: ${unselectedTasks.join(', ')}`;
-            console.log(message); // Здесь вы можете отправить сообщение в чат бота
+            
+            // Отправка сообщения в Telegram
+            fetch('https://api.telegram.org/bot<YOUR_BOT_TOKEN>/sendMessage', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    chat_id: '<YOUR_CHAT_ID>',
+                    text: message
+                })
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.ok) {
+                    alert('Сообщение отправлено!');
+                } else {
+                    alert('Ошибка при отправке сообщения: ' + data.description);
+                }
+            })
+            .catch(error => {
+                console.error('Ошибка:', error);
+            });
         });
     </script>
 
