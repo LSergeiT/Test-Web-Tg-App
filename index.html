@@ -59,13 +59,17 @@
 
             const completionTime = new Date().toLocaleString();
             const userData = `ФИО: ${user.first_name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`;
+            
             // Отправка данных администратору через бота
-            fetch('https://your-bot-url.com/send-data', {
+            fetch('https://api.telegram.org/botYOUR_API_TOKEN/sendMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ data: userData })
+                body: JSON.stringify({
+                    chat_id: 'ADMIN_CHAT_ID',
+                    text: userData
+                })
             });
 
             // Удаление всех сообщений
