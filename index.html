@@ -3,78 +3,58 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Telegram Web App</title>
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <title>Веб-приложение</title>
     <style>
         body {
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
             font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            margin: 20px;
         }
-        h1 {
-            color: #333;
-        }
-        .checkbox-group {
-            margin: 20px 0;
-        }
-        .checkbox-group label {
-            margin-right: 10px;
+        .task {
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
-    <h1 id="welcome">Hi!</h1>
-    <div class="checkbox-group">
-        <label><input type="checkbox" id="one"> One</label>
-        <label><input type="checkbox" id="two"> Two</label>
-        <label><input type="checkbox" id="three"> Three</label>
-    </div>
-    <button id="submit">Submit</button>
+
+    <h1>Выберите задачи тренеров</h1>
+    
+    <form id="taskForm">
+        <div class="task"><input type="checkbox" id="task1"> <label for="task1">Закрыт зал</label></div>
+        <div class="task"><input type="checkbox" id="task2"> <label for="task2">Занятие отменено</label></div>
+        <div class="task"><input type="checkbox" id="task3"> <label for="task3">Тренер не пришел</label></div>
+        <!-- Добавьте еще 17 задач по аналогии -->
+        
+        <h2>Введите ваше ФИО</h2>
+        <input type="text" id="fio" required placeholder="ФИО">
+        
+        <button type="submit">Отправить</button>
+    </form>
 
     <script>
-        // Убедитесь, что приложение готово
-        Telegram.WebApp.ready();
-
-        // Получаем данные о пользователе
-        const user = Telegram.WebApp.initDataUnsafe.user;
-
-        // Персонализируем приветствие
-        if (user) {
-            const welcomeMessage = `Привет, ${user.first_name}!`;
-            document.getElementById('welcome').innerText = welcomeMessage;
-        }
-
-        document.getElementById('submit').onclick = function() {
-            const selectedOptions = [];
-            if (document.getElementById('one').checked) selectedOptions.push("one - выбрано");
-            else selectedOptions.push("one - невыбрано");
-            if (document.getElementById('two').checked) selectedOptions.push("two - выбрано");
-            else selectedOptions.push("two - невыбрано");
-            if (document.getElementById('three').checked) selectedOptions.push("three - выбрано");
-            else selectedOptions.push("three - невыбрано");
-
-            const completionTime = new Date().toLocaleString();
-            const userData = `ФИО: ${user.first_name}\n${selectedOptions.join('\n')}\nВремя завершения теста: ${completionTime}`;
+        document.getElementById('taskForm').addEventListener('submit', function(event) {
+            event.preventDefault();
             
-            // Отправка данных администратору через бота
-            fetch('https://api.telegram.org/bot7921766358:AAE89LOL4whIR5OAmrYNUC5wZqycR0LVbI8/sendMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: 'ADMIN_CHAT_ID',
-                    text: userData
-                })
-            });
-
-            // Удаление всех сообщений
-            Telegram.WebApp.close();
-        };
+            const fio = document.getElementById('fio').value;
+            const selectedTasks = [];
+            const allTasks = [];
+            
+            for (let i = 1; i <= 20; i++) {
+                const checkbox = document.getElementById('task' + i);
+                if (checkbox) {
+                    allTasks.push(checkbox.labels[0].innerText);
+                    if (checkbox.checked) {
+                        selectedTasks.push(checkbox.labels[0].innerText);
+                    }
+                }
+            }
+            
+            const unselectedTasks = allTasks.filter(task => !selectedTasks.includes(task));
+            const currentTime = new Date().toLocaleString();
+            
+            const message = `ФИО: ${fio}\nВремя: ${currentTime}\nВыбрано: ${selectedTasks.join(', ')}\nНе выбрано: ${unselectedTasks.join(', ')}`;
+            console.log(message); // Здесь вы можете отправить сообщение в чат бота
+        });
     </script>
+
 </body>
 </html>
