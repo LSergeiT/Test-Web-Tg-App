@@ -31,19 +31,17 @@
     <h1>Выберите задачи тренеров</h1>
     
     <form id="taskForm">
-    <div class="task"><input type="checkbox" id="task1"> <label for="task1">Один</label></div>
-    <div class="task"><input type="checkbox" id="task2"> <label for="task2">Два</label></div>
-    <div class="task"><input type="checkbox" id="task3"> <label for="task3">Три</label></div>
-    <div class="task"><input type="checkbox" id="task4"> <label for="task4">Четыре</label></div>
-    <div class="task"><input type="checkbox" id="task5"> <label for="task5">Пять</label></div>
-    <div class="task"><input type="checkbox" id="task6"> <label for="task6">Шесть</label></div>
-    <div class="task"><input type="checkbox" id="task7"> <label for="task7">Семь</label></div>
-    <div class="task"><input type="checkbox" id="task8"> <label for="task8">Восемь</label></div>
-    <div class="task"><input type="checkbox" id="task9"> <label for="task9">Девять</label></div>
-    <div class="task"><input type="checkbox" id="task10"> <label for="task10">Десять</label></div>
+        <div class="task"><input type="checkbox" id="task1"> <label for="task1">Один</label></div>
+        <div class="task"><input type="checkbox" id="task2"> <label for="task2">Два</label></div>
+        <div class="task"><input type="checkbox" id="task3"> <label for="task3">Три</label></div>
+        <div class="task"><input type="checkbox" id="task4"> <label for="task4">Четыре</label></div>
+        <div class="task"><input type="checkbox" id="task5"> <label for="task5">Пять</label></div>
+        <div class="task"><input type="checkbox" id="task6"> <label for="task6">Шесть</label></div>
+        <div class="task"><input type="checkbox" id="task7"> <label for="task7">Семь</label></div>
+        <div class="task"><input type="checkbox" id="task8"> <label for="task8">Восемь</label></div>
+        <div class="task"><input type="checkbox" id="task9"> <label for="task9">Девять</label></div>
+        <div class="task"><input type="checkbox" id="task10"> <label for="task10">Десять</label></div>
 
-        <!-- Добавьте еще 17 задач по аналогии -->
-        
         <h2>Введите ваше ФИО</h2>
         <input type="text" id="fio" required placeholder="ФИО">
         
@@ -58,7 +56,7 @@
             const selectedTasks = [];
             const allTasks = [];
             
-            for (let i = 1; i <= 20; i++) {
+            for (let i = 1; i <= 10; i++) {
                 const checkbox = document.getElementById('task' + i);
                 if (checkbox) {
                     allTasks.push(checkbox.labels[0].innerText);
@@ -88,6 +86,18 @@
             .then(data => {
                 if (data.ok) {
                     alert('Сообщение отправлено!');
+                    // Закрываем опрос и удаляем сообщение
+                    // Здесь вы можете добавить код для удаления сообщения
+                    fetch(`https://api.telegram.org/bot8073478411:AAHCsJnxjphGHhGpSyg8KuNiL5ij2tafVXQ/deleteMessage`, {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({
+                            chat_id: '5248094410',
+                            message_id: data.result.message_id // ID сообщения, которое нужно удалить
+                        })
+                    });
                 } else {
                     alert('Ошибка при отправке сообщения: ' + data.description);
                 }
