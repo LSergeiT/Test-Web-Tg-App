@@ -86,18 +86,8 @@
             .then(data => {
                 if (data.ok) {
                     alert('Сообщение отправлено!');
-                    // Закрываем опрос и удаляем сообщение
-                    // Здесь вы можете добавить код для удаления сообщения
-                    fetch(`https://api.telegram.org/bot8073478411:AAHCsJnxjphGHhGpSyg8KuNiL5ij2tafVXQ/deleteMessage`, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json'
-                        },
-                        body: JSON.stringify({
-                            chat_id: '5248094410',
-                            message_id: data.result.message_id // ID сообщения, которое нужно удалить
-                        })
-                    });
+                    // Закрываем веб-приложение
+                    window.close();
                 } else {
                     alert('Ошибка при отправке сообщения: ' + data.description);
                 }
