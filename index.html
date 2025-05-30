@@ -72,13 +72,13 @@
             const message = `ФИО: ${fio}\nВремя: ${currentTime}\nВыбрано: ${selectedTasks.join(', ')}\nНе выбрано: ${unselectedTasks.join(', ')}`;
             
             // Отправка сообщения в Telegram
-            fetch('https://api.telegram.org/bot8073478411:AAHCsJnxjphGHhGpSyg8KuNiL5ij2tafVXQ/sendMessage', {
+            fetch('https://api.telegram.org/botYOUR_API_TOKEN/sendMessage', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify({
-                    chat_id: '5248094410',
+                    chat_id: 'ADMIN_CHAT_ID',
                     text: message
                 })
             })
@@ -88,6 +88,7 @@
                     alert('Сообщение отправлено!');
                     // Закрываем веб-приложение
                     window.close();
+                    // Здесь можно добавить код для удаления сообщения
                 } else {
                     alert('Ошибка при отправке сообщения: ' + data.description);
                 }
