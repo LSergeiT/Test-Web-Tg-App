@@ -1,102 +1,170 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Веб-приложение</title>
+    <title>System Information Tool</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 20px;
-            background-color: #333; /* Темный фон */
-            color: #fff; /* Светлый текст */
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
         }
-        .task {
-            margin: 10px 0;
-        }
-        button {
-            background-color: #555; /* Темная кнопка */
-            color: #fff; /* Светлый текст на кнопке */
-            border: none;
-            padding: 10px 15px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #777; /* Светлее при наведении */
-        }
+        .pulse { animation: pulse 2s infinite; }
     </style>
 </head>
-<body>
+<body class="bg-gray-100 dark:bg-gray-900 text-gray-800 dark:text-white transition-colors duration-300">
+    <div class="min-h-screen flex flex-col items-center justify-center p-4">
+        <div class="w-full max-w-4xl bg-white dark:bg-gray-800 rounded-xl shadow-2xl overflow-hidden">
+            <!-- Header -->
+            <header class="bg-blue-600 dark:bg-blue-800 text-white px-6 py-4 flex justify-between items-center">
+                <h1 class="text-2xl font-bold">System Information</h1>
+                <button id="themeToggle" class="p-2 rounded-full hover:bg-blue-700 dark:hover:bg-blue-900 transition">
+                    <svg id="sunIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6 hidden" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z" />
+                    </svg>
+                    <svg id="moonIcon" xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z" />
+                    </svg>
+                </button>
+            </header>
 
-    <h1>Выберите задачи тренеров</h1>
-    
-    <form id="taskForm">
-        <div class="task"><input type="checkbox" id="task1"> <label for="task1">Один</label></div>
-        <div class="task"><input type="checkbox" id="task2"> <label for="task2">Два</label></div>
-        <div class="task"><input type="checkbox" id="task3"> <label for="task3">Три</label></div>
-        <div class="task"><input type="checkbox" id="task4"> <label for="task4">Четыре</label></div>
-        <div class="task"><input type="checkbox" id="task5"> <label for="task5">Пять</label></div>
-        <div class="task"><input type="checkbox" id="task6"> <label for="task6">Шесть</label></div>
-        <div class="task"><input type="checkbox" id="task7"> <label for="task7">Семь</label></div>
-        <div class="task"><input type="checkbox" id="task8"> <label for="task8">Восемь</label></div>
-        <div class="task"><input type="checkbox" id="task9"> <label for="task9">Девять</label></div>
-        <div class="task"><input type="checkbox" id="task10"> <label for="task10">Десять</label></div>
+            <!-- Main Content -->
+            <main class="p-6">
+                <!-- Loading State -->
+                <div id="loading" class="flex flex-col items-center justify-center py-8">
+                    <div class="pulse">
+                        <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/3e2931e9-c29b-4ee8-8ec3-a699899b525f.png" alt="Loading spinner with gear icon" class="w-16 h-16 mx-auto mb-4">
+                    </div>
+                    <p class="text-gray-500 dark:text-gray-400">Fetching system info...</p>
+                </div>
 
-        <h2>Введите ваше ФИО</h2>
-        <input type="text" id="fio" required placeholder="ФИО">
-        
-        <button type="submit">Отправить</button>
-    </form>
+                <!-- Device Info -->
+                <div id="deviceInfo" class="space-y-4 hidden">
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+                        <!-- CPU Card -->
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                            <div class="flex items-center mb-2">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/4420082c-d6c3-4ff8-b5c7-1418c946e846.png" alt="CPU chip icon in blue" class="mr-2 w-8 h-8">
+                                <h3 class="font-semibold text-lg">Processor</h3>
+                            </div>
+                            <p id="cpuInfo" class="text-sm text-gray-600 dark:text-gray-300 truncate">Loading...</p>
+                        </div>
+
+                        <!-- GPU Card -->
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                            <div class="flex items-center mb-2">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/da332878-c61d-4595-be82-c50bf9dbc646.png" alt="Graphics card icon in purple" class="mr-2 w-8 h-8">
+                                <h3 class="font-semibold text-lg">Graphics</h3>
+                            </div>
+                            <p id="gpuInfo" class="text-sm text-gray-600 dark:text-gray-300 truncate">Loading...</p>
+                        </div>
+
+                        <!-- OS Card -->
+                        <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                            <div class="flex items-center mb-2">
+                                <img src="https://storage.googleapis.com/workspace-0f70711f-8b4e-4d94-86f1-2a93ccde5887/image/ea769a33-64a3-436f-9977-9973409ba155.png" alt="Operating system logo" class="mr-2 w-8 h-8">
+                                <h3 class="font-semibold text-lg">Operating System</h3>
+                            </div>
+                            <p id="osInfo" class="text-sm text-gray-600 dark:text-gray-300 truncate">Loading...</p>
+                        </div>
+                    </div>
+
+                    <!-- Details Section -->
+                    <div class="bg-gray-50 dark:bg-gray-700 p-4 rounded-lg shadow">
+                        <h3 class="font-semibold text-xl mb-3 border-b pb-2">Hardware Details</h3>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div>
+                                <h4 class="font-medium text-gray-500 dark:text-gray-400 mb-1">Hostname</h4>
+                                <p id="hostname" class="text-gray-800 dark:text-white">-</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-500 dark:text-gray-400 mb-1">MAC Address</h4>
+                                <p id="macAddress" class="text-gray-800 dark:text-white">-</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-500 dark:text-gray-400 mb-1">Motherboard</h4>
+                                <p id="motherboardInfo" class="text-gray-800 dark:text-white">-</p>
+                            </div>
+                            <div>
+                                <h4 class="font-medium text-gray-500 dark:text-gray-400 mb-1">HWID</h4>
+                                <p id="hwidInfo" class="text-gray-800 dark:text-white">-</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Error Message -->
+                <div id="errorMessage" class="hidden bg-red-100 dark:bg-red-900 dark:text-white text-red-800 p-4 rounded-lg mb-4">
+                    <p>⚠️ Failed to fetch system information. This tool requires desktop browser access.</p>
+                </div>
+            </main>
+
+            <!-- Footer -->
+            <footer class="bg-gray-100 dark:bg-gray-700 px-6 py-3 text-center text-sm text-gray-600 dark:text-gray-300">
+                <p>System Information Viewer – Works best on Windows/Linux with Chrome/Firefox</p>
+            </footer>
+        </div>
+    </div>
 
     <script>
-        document.getElementById('taskForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            
-            const fio = document.getElementById('fio').value;
-            const selectedTasks = [];
-            const allTasks = [];
-            
-            for (let i = 1; i <= 10; i++) {
-                const checkbox = document.getElementById('task' + i);
-                if (checkbox) {
-                    allTasks.push(checkbox.labels[0].innerText);
-                    if (checkbox.checked) {
-                        selectedTasks.push(checkbox.labels[0].innerText);
-                    }
-                }
-            }
-            
-            const unselectedTasks = allTasks.filter(task => !selectedTasks.includes(task));
-            const currentTime = new Date().toLocaleString();
-            
-            const message = `ФИО: ${fio}\nВремя: ${currentTime}\nВыбрано: ${selectedTasks.join(', ')}\nНе выбрано: ${unselectedTasks.join(', ')}`;
-            
-            // Отправка сообщения в Telegram
-            fetch('https://api.telegram.org/bot8073478411:AAHCsJnxjphGHhGpSyg8KuNiL5ij2tafVXQ/sendMessage', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    chat_id: '5248094410',
-                    text: message
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.ok) {
-                    alert('Сообщение отправлено успешно!');
-                    // Закрываем веб-приложение
-                    window.close();
-                } else {
-                    alert('Ошибка при отправке сообщения: ' + data.description);
-                }
-            })
-            .catch(error => {
-                console.error('Ошибка:', error);
-            });
-        });
-    </script>
+        // Light/Dark Theme Toggle
+        const themeToggle = document.getElementById('themeToggle');
+        const sunIcon = document.getElementById('sunIcon');
+        const moonIcon = document.getElementById('moonIcon');
+        const html = document.documentElement;
 
+        // Attach event listener
+        themeToggle.addEventListener('click', () => {
+            if (html.classList.contains('dark')) {
+                html.classList.remove('dark');
+                localStorage.theme = 'light';
+                sunIcon.classList.add('hidden');
+                moonIcon.classList.remove('hidden');
+            } else {
+                html.classList.add('dark');
+                localStorage.theme = 'dark';
+                sunIcon.classList.remove('hidden');
+                moonIcon.classList.add('hidden');
+            }
+        });
+
+        // On page load, check for stored theme preference
+        if (localStorage.theme === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            html.classList.add('dark');
+            sunIcon.classList.remove('hidden');
+            moonIcon.classList.add('hidden');
+        } else {
+            html.classList.remove('dark');
+        }
+
+        // Simulate fetching system info (in a real app, this would use Electron or a backend)
+        setTimeout(() => {
+            try {
+                // Mock data (in a real app, replace with actual system checks)
+                document.getElementById('cpuInfo').textContent = 
+                    `${navigator.hardwareConcurrency} cores | ${navigator.deviceMemory || 'Unknown'} GB RAM`;
+
+                document.getElementById('gpuInfo').textContent = 
+                    'WebGL: ' + (document.createElement('canvas').getContext('webgl')?.getParameter(document.createElement('canvas').getContext('webgl').RENDERER) || 'Unknown');
+
+                document.getElementById('osInfo').textContent = 
+                    `${navigator.platform} | ${navigator.userAgent.split('(')[1].split(')')[0]}`;
+
+                document.getElementById('hostname').textContent = window.location.hostname || 'Localhost';
+                document.getElementById('macAddress').textContent = 'Not available in browsers';
+                document.getElementById('motherboardInfo').textContent = 'Requires system access';
+                document.getElementById('hwidInfo').textContent = 'Cannot access HWID from browser';
+
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('deviceInfo').classList.remove('hidden');
+            } catch (error) {
+                document.getElementById('loading').classList.add('hidden');
+                document.getElementById('errorMessage').classList.remove('hidden');
+                console.error("Error:", error);
+            }
+        }, 1500);
+    </script>
 </body>
 </html>
+
