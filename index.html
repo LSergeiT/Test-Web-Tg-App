@@ -5,112 +5,101 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>System Info Bot</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <style>
         :root {
-            --tg-bg-color: #17212b;
-            --tg-text-color: #ffffff;
-            --tg-hint-color: #708499;
-            --tg-link-color: #5ac8fb;
-            --tg-primary-color: #2ea6ff;
-            --tg-secondary-color: #26323f;
-            --tg-border-color: #2c3e50;
-            --tg-card-bg: #1e2c3a;
+            --bg-color: #1e1e1e;
+            --card-bg: #2a2a2a;
+            --text-color: #ffffff;
+            --primary-color: #007bff;
+            --secondary-color: #6c757d;
+            --border-color: #444;
+            --hover-color: #0056b3;
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background-color: var(--tg-bg-color);
-            color: var(--tg-text-color);
+            font-family: 'Roboto', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
             margin: 0;
             padding: 0;
-            line-height: 1.5;
+            line-height: 1.6;
         }
 
         .container {
             max-width: 800px;
             margin: 0 auto;
-            padding: 16px;
+            padding: 20px;
         }
 
         .header {
             text-align: center;
-            margin-bottom: 24px;
+            margin-bottom: 30px;
         }
 
         .header h1 {
-            margin: 0;
-            font-size: 24px;
-            color: var(--tg-primary-color);
+            font-size: 28px;
+            color: var(--primary-color);
         }
 
         .card {
-            background-color: var(--tg-card-bg);
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 16px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-            border: 1px solid var(--tg-border-color);
+            background-color: var(--card-bg);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
         }
 
         .card-title {
-            font-size: 18px;
-            margin-bottom: 12px;
-            color: var(--tg-primary-color);
-            display: flex;
-            align-items: center;
-            gap: 8px;
-        }
-
-        .info-grid {
-            display: grid;
-            grid-template-columns: 1fr 2fr;
-            gap: 12px;
-        }
-
-        .info-label {
-            color: var(--tg-hint-color);
-            font-weight: 500;
-        }
-
-        .info-value {
-            word-break: break-word;
-        }
-
-        .icon {
             font-size: 20px;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 10px;
         }
 
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: var(--tg-hint-color);
+        .info {
+            margin: 10px 0;
+        }
+
+        .info strong {
+            color: var(--secondary-color);
         }
 
         .btn {
-            background-color: var(--tg-primary-color);
-            color: white;
+            background-color: var(--primary-color);
+            color: var(--text-color);
             border: none;
-            padding: 12px 16px;
-            border-radius: 8px;
+            padding: 12px 20px;
+            border-radius: 5px;
             font-weight: 500;
             cursor: pointer;
             width: 100%;
             font-size: 16px;
-            margin-top: 16px;
-            transition: opacity 0.3s;
+            margin-top: 20px;
+            transition: background-color 0.3s;
         }
 
         .btn:hover {
-            opacity: 0.9;
-        }
-
-        .btn:active {
-            opacity: 0.8;
+            background-color: var(--hover-color);
         }
 
         @media (max-width: 600px) {
-            .info-grid {
-                grid-template-columns: 1fr;
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 24px;
+            }
+
+            .btn {
+                font-size: 14px;
             }
         }
     </style>
@@ -118,7 +107,7 @@
 <body>
     <div class="container">
         <div class="header">
-            <h1>🔍 System Information</h1>
+            <h1>🔍 Системная Информация</h1>
         </div>
 
         <div id="content">
@@ -134,111 +123,57 @@
             tg.expand();
             tg.BackButton.hide();
 
-            // Функция для форматирования времени работы
-            function formatUptime(seconds) {
-                const days = Math.floor(seconds / 86400);
-                const hours = Math.floor((seconds % 86400) / 3600);
-                return `${days} дней, ${hours} часов`;
-            }
-
-            // Функция для создания карточки информации
-            function createCard(title, icon, items) {
-                const card = document.createElement('div');
-                card.className = 'card';
-
-                const titleElement = document.createElement('div');
-                titleElement.className = 'card-title';
-                titleElement.innerHTML = `<span class="icon">${icon}</span>${title}`;
-                card.appendChild(titleElement);
-
-                const grid = document.createElement('div');
-                grid.className = 'info-grid';
-
-                items.forEach(item => {
-                    const label = document.createElement('div');
-                    label.className = 'info-label';
-                    label.textContent = item.label;
-
-                    const value = document.createElement('div');
-                    value.className = 'info-value';
-                    value.textContent = item.value;
-
-                    grid.appendChild(label);
-                    grid.appendChild(value);
-                });
-
-                card.appendChild(grid);
-                return card;
-            }
-
-            // Получение данных системы из WebApp.initData
-            function getSystemInfo() {
-                // В реальном приложении здесь будет запрос к бэкенду
-                // Для демо используем примерные данные
-                const now = Math.floor(Date.now() / 1000);
-                const uptime = formatUptime(now - (now - 3600 * 5)); // 5 часов
-
-                return [
-                    {
-                        title: '💻 Аппаратное обеспечение',
-                        icon: '🖥️',
-                        items: [
-                            { label: 'Процессор', value: navigator.hardwareConcurrency + ' ядер' },
-                            { label: 'Оперативная память', value: (navigator.deviceMemory || 'Недоступно') + ' GB' },
-                            { label: 'Платформа', value: navigator.platform },
-                            { label: 'User Agent', value: navigator.userAgent }
-                        ]
-                    },
-                    {
-                        title: '🌐 Сеть',
-                        icon: '📶',
-                        items: [
-                            { label: 'Онлайн статус', value: navigator.onLine ? 'Online' : 'Offline' },
-                            { label: 'Соединение', value: navigator.connection ? navigator.connection.effectiveType : 'Недоступно' },
-                            { label: 'Язык', value: navigator.language },
-                            { label: 'Часовой пояс', value: Intl.DateTimeFormat().resolvedOptions().timeZone }
-                        ]
-                    },
-                    {
-                        title: '⚙️ Система',
-                        icon: '⚙️',
-                        items: [
-                            { label: 'Время работы', value: uptime },
-                            { label: 'Дата/Время', value: new Date().toLocaleString() },
-                            { label: 'WebView версия', value: navigator.userAgentData ? navigator.userAgentData.platformVersion : 'Недоступно' },
-                            { label: 'Screen', value: `${window.screen.width}x${window.screen.height}` }
-                        ]
-                    }
-                ];
-            }
-
-            // Отображение информации
-            function displayInfo() {
+            // Функция для отображения информации
+            function displayInfo(data) {
                 const content = document.getElementById('content');
                 content.innerHTML = '';
-                
-                const info = getSystemInfo();
-                
-                info.forEach(section => {
-                    const card = createCard(section.title, section.icon, section.items);
+
+                const info = [
+                    { label: 'ОС', value: data.os },
+                    { label: 'Архитектура', value: data.architecture },
+                    { label: 'Имя компьютера', value: data.hostname },
+                    { label: 'Модель системы', value: data.model },
+                    { label: 'Версия BIOS', value: data.bios },
+                    { label: 'Время работы', value: data.uptime },
+                    { label: 'Зарегистрированный владелец', value: data.owner },
+                    { label: 'HWID', value: data.hwid },
+                    { label: 'Серийный номер материнской платы', value: data.motherboard_serial },
+                    { label: 'UUID системы', value: data.uuid },
+                    { label: 'MAC-адрес', value: data.mac_address },
+                    { label: 'Процессор', value: data.cpu_info },
+                    { label: 'Графический процессор', value: data.gpu_info.join(', ') }
+                ];
+
+                info.forEach(item => {
+                    const card = document.createElement('div');
+                    card.className = 'card';
+                    card.innerHTML = `<div class="card-title">${item.label}</div><div class="info"><strong>${item.label}:</strong> ${item.value}</div>`;
                     content.appendChild(card);
                 });
 
                 // Добавляем кнопку закрытия, если открыто в Telegram
-                if (window.Telegram.WebApp.platform !== 'unknown') {
+                if (tg.platform !== 'unknown') {
                     const closeBtn = document.createElement('button');
                     closeBtn.className = 'btn';
                     closeBtn.textContent = 'Закрыть';
-                    closeBtn.onclick = () => Telegram.WebApp.close();
+                    closeBtn.onclick = () => tg.close();
                     content.appendChild(closeBtn);
                 }
             }
 
+            // Получение данных системы
+            function getSystemInfo() {
+                fetch('/system_info')
+                    .then(response => response.json())
+                    .then(data => displayInfo(data))
+                    .catch(error => console.error('Ошибка:', error));
+            }
+
             // Обработчик кнопки обновления
-            document.getElementById('refreshBtn').addEventListener('click', displayInfo);
+            document.getElementById('refreshBtn').addEventListener('click', getSystemInfo);
 
             // Первоначальная загрузка
-            displayInfo();
+            getSystemInfo();
         });
     </script>
 </body>
